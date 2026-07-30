@@ -33,7 +33,10 @@ public class Application {
                     break;
 
                 case 0:
-                    System.out.println("Goodbye!");
+                    System.out.println();
+                    System.out.println("=======================================");
+                    System.out.println("Thank you for using World Report System");
+                    System.out.println("=======================================");
                     running = false;
                     break;
 
