@@ -1,6 +1,14 @@
 package com.junaid.repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.junaid.database.DatabaseConnection;
+import com.junaid.model.City;
 
 public class CityRepository {
 
@@ -10,4 +18,45 @@ public class CityRepository {
         this.databaseConnection = new DatabaseConnection();
     }
 
+    public List<City> getAllCitiesByPopulation() {
+
+        List<City> cities = new ArrayList<>();
+
+        String sql = """
+                SELECT c.ID,
+                       c.Name,
+                       c.CountryCode,
+                       co.Name AS CountryName,
+                       c.District,
+                       c.Population
+                FROM city c
+                JOIN country co
+                    ON c.CountryCode = co.Code
+                ORDER BY c.Population DESC
+                """;
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+
+                City city = new City(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("Name"),
+                        resultSet.getString("CountryCode"),
+                        resultSet.getString("CountryName"),
+                        resultSet.getString("District"),
+                        resultSet.getInt("Population"));
+
+                cities.add(city);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cities;
+    }
 }

@@ -5,18 +5,25 @@ public class City {
     private int id;
     private String name;
     private String countryCode;
+    private String countryName;
     private String district;
     private int population;
 
     public City() {
     }
 
-    public City(int id, String name, String countryCode, String district, int population) {
+    public City(int id,
+            String name,
+            String countryCode,
+            String countryName,
+            String district,
+            int population) {
         this.id = id;
         this.name = name;
         this.countryCode = countryCode;
         this.district = district;
         this.population = population;
+        this.countryName = countryName;
     }
 
     public int getId() {
@@ -57,6 +64,14 @@ public class City {
 
     public void setPopulation(int population) {
         this.population = population;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     @Override

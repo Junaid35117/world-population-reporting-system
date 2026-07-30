@@ -1,5 +1,6 @@
 package com.junaid.application;
 
+import com.junaid.report.CityReport;
 import com.junaid.report.CountryReport;
 import com.junaid.service.MenuService;
 
@@ -7,10 +8,12 @@ public class Application {
 
     private final MenuService menuService;
     private final CountryReport countryReport;
+    private final CityReport cityReport;
 
     public Application() {
         this.menuService = new MenuService();
         this.countryReport = new CountryReport();
+        this.cityReport = new CityReport();
     }
 
     public void start() {
@@ -45,6 +48,11 @@ public class Application {
                     int limit = menuService.getCountryLimit();
 
                     countryReport.displayTopCountries(limit);
+
+                    break;
+                case 5:
+
+                    cityReport.displayAllCitiesByPopulation();
 
                     break;
 
