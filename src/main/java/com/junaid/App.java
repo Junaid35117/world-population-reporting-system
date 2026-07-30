@@ -1,15 +1,24 @@
 package com.junaid;
 
-import com.junaid.database.DatabaseConfig;
+import java.sql.Connection;
+
+import com.junaid.database.DatabaseConnection;
 
 public class App {
 
     public static void main(String[] args) {
 
-        DatabaseConfig config = new DatabaseConfig();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
 
-        System.out.println("Database URL: " + config.getUrl());
-        System.out.println("Database Username: " + config.getUsername());
-        System.out.println("Configuration loaded successfully.");
+        try (Connection connection = databaseConnection.getConnection()) {
+
+            if (connection != null && !connection.isClosed()) {
+                System.out.println("Successfully connected to the World database!");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Connection failed.");
+            e.printStackTrace();
+        }
     }
 }
