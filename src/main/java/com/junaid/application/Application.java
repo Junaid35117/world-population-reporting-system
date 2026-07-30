@@ -56,6 +56,14 @@ public class Application {
 
                     break;
 
+                case 6:
+
+                    String country = menuService.getCountryName();
+
+                    cityReport.displayCitiesByCountry(country);
+
+                    break;
+
                 case 0:
                     System.out.println();
                     System.out.println("=======================================");

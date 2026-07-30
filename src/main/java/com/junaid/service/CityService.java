@@ -16,4 +16,7 @@ public class CityService {
         return cityRepository.getAllCitiesByPopulation();
     }
 
+    public List<City> getCitiesByCountry(String countryName) {
+        return cityRepository.getCitiesByCountry(countryName);
+    }
 }

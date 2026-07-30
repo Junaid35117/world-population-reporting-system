@@ -14,17 +14,18 @@ public class CityReport {
         this.cityService = new CityService();
     }
 
-    public void displayAllCitiesByPopulation() {
-
-        List<City> cities = cityService.getAllCitiesByPopulation();
+    private void printCities(List<City> cities) {
 
         if (cities == null || cities.isEmpty()) {
             System.out.println("No cities found.");
             return;
         }
 
+        NumberFormat formatter = NumberFormat.getInstance();
+
         System.out.println(
                 "==============================================================================================================");
+
         System.out.printf("%-30s %-25s %-25s %15s%n",
                 "City",
                 "Country",
@@ -33,8 +34,6 @@ public class CityReport {
 
         System.out.println(
                 "==============================================================================================================");
-
-        NumberFormat formatter = NumberFormat.getInstance();
 
         for (City city : cities) {
 
@@ -47,5 +46,19 @@ public class CityReport {
 
         System.out.println(
                 "==============================================================================================================");
+    }
+
+    public void displayAllCitiesByPopulation() {
+
+        List<City> cities = cityService.getAllCitiesByPopulation();
+
+        printCities(cities);
+    }
+
+    public void displayCitiesByCountry(String countryName) {
+
+        List<City> cities = cityService.getCitiesByCountry(countryName);
+
+        printCities(cities);
     }
 }

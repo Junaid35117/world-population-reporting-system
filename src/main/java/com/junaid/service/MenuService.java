@@ -106,4 +106,22 @@ public class MenuService {
             }
         }
     }
+
+    public String getCountryName() {
+
+        scanner.nextLine();
+
+        while (true) {
+
+            System.out.print("Enter Country Name: ");
+
+            String country = scanner.nextLine().trim();
+
+            if (!country.isEmpty()) {
+                return country;
+            }
+
+            System.out.println("Country name cannot be empty.");
+        }
+    }
 }
