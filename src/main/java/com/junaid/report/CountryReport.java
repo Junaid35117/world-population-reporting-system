@@ -1,0 +1,54 @@
+package com.junaid.report;
+
+import java.text.NumberFormat;
+import java.util.List;
+
+import com.junaid.model.Country;
+import com.junaid.service.CountryService;
+
+public class CountryReport {
+
+    private final CountryService countryService;
+
+    public CountryReport() {
+        this.countryService = new CountryService();
+    }
+
+    public void displayAllCountriesByPopulation() {
+
+        List<Country> countries = countryService.getAllCountriesByPopulation();
+
+        if (countries == null || countries.isEmpty()) {
+            System.out.println("No countries found.");
+            return;
+        }
+
+        System.out.println(
+                "==========================================================================================================");
+        System.out.printf("%-5s %-30s %-20s %-25s %15s%n",
+                "Code",
+                "Country",
+                "Continent",
+                "Region",
+                "Population");
+
+        System.out.println(
+                "==========================================================================================================");
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        for (Country country : countries) {
+
+            System.out.printf(
+                    "%-5s %-30s %-20s %-25s %15s%n",
+                    country.getCode(),
+                    country.getName(),
+                    country.getContinent(),
+                    country.getRegion(),
+                    formatter.format(country.getPopulation()));
+        }
+
+        System.out.println(
+                "==========================================================================================================");
+    }
+}
