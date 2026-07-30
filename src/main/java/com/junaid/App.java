@@ -1,24 +1,22 @@
 package com.junaid;
 
-import java.sql.Connection;
+import java.util.List;
 
-import com.junaid.database.DatabaseConnection;
+import com.junaid.model.Country;
+import com.junaid.repository.CountryRepository;
 
 public class App {
 
     public static void main(String[] args) {
 
-        DatabaseConnection databaseConnection = new DatabaseConnection();
+        CountryRepository repository = new CountryRepository();
 
-        try (Connection connection = databaseConnection.getConnection()) {
+        List<Country> countries = repository.getAllCountriesByPopulation();
 
-            if (connection != null && !connection.isClosed()) {
-                System.out.println("Successfully connected to the World database!");
-            }
+        System.out.println("Total Countries: " + countries.size());
 
-        } catch (Exception e) {
-            System.out.println("Connection failed.");
-            e.printStackTrace();
+        for (int i = 0; i < 10 && i < countries.size(); i++) {
+            System.out.println(countries.get(i));
         }
     }
 }
