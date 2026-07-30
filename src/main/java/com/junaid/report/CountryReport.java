@@ -14,9 +14,7 @@ public class CountryReport {
         this.countryService = new CountryService();
     }
 
-    public void displayAllCountriesByPopulation() {
-
-        List<Country> countries = countryService.getAllCountriesByPopulation();
+    private void printCountries(List<Country> countries) {
 
         if (countries == null || countries.isEmpty()) {
             System.out.println("No countries found.");
@@ -25,6 +23,7 @@ public class CountryReport {
 
         System.out.println(
                 "==========================================================================================================");
+
         System.out.printf("%-5s %-30s %-20s %-25s %15s%n",
                 "Code",
                 "Country",
@@ -39,8 +38,7 @@ public class CountryReport {
 
         for (Country country : countries) {
 
-            System.out.printf(
-                    "%-5s %-30s %-20s %-25s %15s%n",
+            System.out.printf("%-5s %-30s %-20s %-25s %15s%n",
                     country.getCode(),
                     country.getName(),
                     country.getContinent(),
@@ -50,5 +48,19 @@ public class CountryReport {
 
         System.out.println(
                 "==========================================================================================================");
+    }
+
+    public void displayAllCountriesByPopulation() {
+
+        List<Country> countries = countryService.getAllCountriesByPopulation();
+
+        printCountries(countries);
+    }
+
+    public void displayCountriesByContinent(String continent) {
+
+        List<Country> countries = countryService.getCountriesByContinent(continent);
+
+        printCountries(countries);
     }
 }

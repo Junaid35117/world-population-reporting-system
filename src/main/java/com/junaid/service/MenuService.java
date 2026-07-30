@@ -39,4 +39,13 @@ public class MenuService {
 
         return scanner.nextInt();
     }
+
+    public String getContinentName() {
+
+        System.out.print("Enter Continent Name: ");
+
+        scanner.nextLine(); // Consume leftover newline
+
+        return scanner.nextLine();
+    }
 }

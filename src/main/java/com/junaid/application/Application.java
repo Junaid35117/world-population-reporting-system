@@ -22,13 +22,19 @@ public class Application {
             int choice = menuService.getUserChoice();
 
             switch (choice) {
-                case 0:
-                    System.out.println("Goodbye!");
-                    running = false;
-                    break;
 
                 case 1:
                     countryReport.displayAllCountriesByPopulation();
+                    break;
+
+                case 2:
+                    String continent = menuService.getContinentName();
+                    countryReport.displayCountriesByContinent(continent);
+                    break;
+
+                case 0:
+                    System.out.println("Goodbye!");
+                    running = false;
                     break;
 
                 default:

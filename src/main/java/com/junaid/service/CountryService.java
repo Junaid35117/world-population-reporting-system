@@ -16,4 +16,8 @@ public class CountryService {
     public List<Country> getAllCountriesByPopulation() {
         return countryRepository.getAllCountriesByPopulation();
     }
+
+    public List<Country> getCountriesByContinent(String continent) {
+        return countryRepository.getCountriesByContinent(continent);
+    }
 }
