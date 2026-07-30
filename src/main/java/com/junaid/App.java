@@ -1,10 +1,15 @@
 package com.junaid;
 
-/**
- * Hello world!
- */
+import com.junaid.database.DatabaseConfig;
+
 public class App {
+
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        DatabaseConfig config = new DatabaseConfig();
+
+        System.out.println("Database URL: " + config.getUrl());
+        System.out.println("Database Username: " + config.getUsername());
+        System.out.println("Configuration loaded successfully.");
     }
 }
