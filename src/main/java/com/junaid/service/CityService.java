@@ -19,4 +19,8 @@ public class CityService {
     public List<City> getCitiesByCountry(String countryName) {
         return cityRepository.getCitiesByCountry(countryName);
     }
+
+    public List<City> getCitiesByDistrict(String district) {
+        return cityRepository.getCitiesByDistrict(district);
+    }
 }

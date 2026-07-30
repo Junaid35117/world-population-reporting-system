@@ -107,4 +107,52 @@ public class CityRepository {
 
         return cities;
     }
+
+    public List<City> getCitiesByDistrict(String district) {
+
+        List<City> cities = new ArrayList<>();
+
+        String sql = """
+                SELECT c.ID,
+                       c.Name,
+                       c.CountryCode,
+                       co.Name AS CountryName,
+                       c.District,
+                       c.Population
+                FROM city c
+                JOIN country co
+                    ON c.CountryCode = co.Code
+                WHERE c.District = ?
+                ORDER BY c.Population DESC
+                """;
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, district);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+
+                    City city = new City(
+                            resultSet.getInt("ID"),
+                            resultSet.getString("Name"),
+                            resultSet.getString("CountryCode"),
+                            resultSet.getString("CountryName"),
+                            resultSet.getString("District"),
+                            resultSet.getInt("Population"));
+
+                    cities.add(city);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cities;
+    }
 }

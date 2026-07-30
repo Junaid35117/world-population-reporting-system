@@ -61,4 +61,11 @@ public class CityReport {
 
         printCities(cities);
     }
+
+    public void displayCitiesByDistrict(String district) {
+
+        List<City> cities = cityService.getCitiesByDistrict(district);
+
+        printCities(cities);
+    }
 }

@@ -64,6 +64,14 @@ public class Application {
 
                     break;
 
+                case 7:
+
+                    String district = menuService.getDistrictName();
+
+                    cityReport.displayCitiesByDistrict(district);
+
+                    break;
+
                 case 0:
                     System.out.println();
                     System.out.println("=======================================");

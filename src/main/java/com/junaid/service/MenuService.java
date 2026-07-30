@@ -124,4 +124,22 @@ public class MenuService {
             System.out.println("Country name cannot be empty.");
         }
     }
+
+    public String getDistrictName() {
+
+        scanner.nextLine();
+
+        while (true) {
+
+            System.out.print("Enter District Name: ");
+
+            String district = scanner.nextLine().trim();
+
+            if (!district.isEmpty()) {
+                return district;
+            }
+
+            System.out.println("District name cannot be empty.");
+        }
+    }
 }
