@@ -40,6 +40,14 @@ public class Application {
 
                     break;
 
+                case 4:
+
+                    int limit = menuService.getCountryLimit();
+
+                    countryReport.displayTopCountries(limit);
+
+                    break;
+
                 case 0:
                     System.out.println();
                     System.out.println("=======================================");

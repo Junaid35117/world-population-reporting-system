@@ -83,4 +83,27 @@ public class MenuService {
             System.out.println("Region cannot be empty.");
         }
     }
+
+    public int getCountryLimit() {
+
+        while (true) {
+
+            System.out.print("Enter number of countries: ");
+
+            if (scanner.hasNextInt()) {
+
+                int limit = scanner.nextInt();
+
+                if (limit > 0) {
+                    return limit;
+                }
+
+                System.out.println("Number must be greater than zero.");
+            } else {
+
+                System.out.println("Please enter a valid number.");
+                scanner.next();
+            }
+        }
+    }
 }

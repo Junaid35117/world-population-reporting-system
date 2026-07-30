@@ -24,4 +24,8 @@ public class CountryService {
     public List<Country> getCountriesByRegion(String region) {
         return countryRepository.getCountriesByRegion(region);
     }
+
+    public List<Country> getTopCountries(int limit) {
+        return countryRepository.getTopCountries(limit);
+    }
 }

@@ -70,4 +70,11 @@ public class CountryReport {
 
         printCountries(countries);
     }
+
+    public void displayTopCountries(int limit) {
+
+        List<Country> countries = countryService.getTopCountries(limit);
+
+        printCountries(countries);
+    }
 }
