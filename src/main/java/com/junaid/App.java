@@ -3,15 +3,15 @@ package com.junaid;
 import java.util.List;
 
 import com.junaid.model.Country;
-import com.junaid.repository.CountryRepository;
+import com.junaid.service.CountryService;
 
 public class App {
 
     public static void main(String[] args) {
 
-        CountryRepository repository = new CountryRepository();
+        CountryService service = new CountryService();
 
-        List<Country> countries = repository.getAllCountriesByPopulation();
+        List<Country> countries = service.getAllCountriesByPopulation();
 
         System.out.println("Total Countries: " + countries.size());
 
