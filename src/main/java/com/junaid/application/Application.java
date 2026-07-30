@@ -32,6 +32,14 @@ public class Application {
                     countryReport.displayCountriesByContinent(continent);
                     break;
 
+                case 3:
+
+                    String region = menuService.getRegionName();
+
+                    countryReport.displayCountriesByRegion(region);
+
+                    break;
+
                 case 0:
                     System.out.println();
                     System.out.println("=======================================");

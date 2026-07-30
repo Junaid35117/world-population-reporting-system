@@ -65,4 +65,22 @@ public class MenuService {
             System.out.println("Continent name cannot be empty.");
         }
     }
+
+    public String getRegionName() {
+
+        scanner.nextLine();
+
+        while (true) {
+
+            System.out.print("Enter Region Name: ");
+
+            String region = scanner.nextLine().trim();
+
+            if (!region.isEmpty()) {
+                return region;
+            }
+
+            System.out.println("Region cannot be empty.");
+        }
+    }
 }

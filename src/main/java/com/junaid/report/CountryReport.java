@@ -63,4 +63,11 @@ public class CountryReport {
 
         printCountries(countries);
     }
+
+    public void displayCountriesByRegion(String region) {
+
+        List<Country> countries = countryService.getCountriesByRegion(region);
+
+        printCountries(countries);
+    }
 }
