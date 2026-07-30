@@ -23,4 +23,8 @@ public class CityService {
     public List<City> getCitiesByDistrict(String district) {
         return cityRepository.getCitiesByDistrict(district);
     }
+
+    public List<City> getAllCapitalCities() {
+        return cityRepository.getAllCapitalCities();
+    }
 }

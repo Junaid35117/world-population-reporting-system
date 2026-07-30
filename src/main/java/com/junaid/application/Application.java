@@ -72,6 +72,12 @@ public class Application {
 
                     break;
 
+                case 8:
+
+                    cityReport.displayAllCapitalCities();
+
+                    break;
+
                 case 0:
                     System.out.println();
                     System.out.println("=======================================");
