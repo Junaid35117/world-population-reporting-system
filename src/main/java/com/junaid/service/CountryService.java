@@ -3,6 +3,7 @@ package com.junaid.service;
 import java.util.List;
 
 import com.junaid.model.Country;
+import com.junaid.model.CountryPopulation;
 import com.junaid.repository.CountryRepository;
 
 public class CountryService {
@@ -27,5 +28,9 @@ public class CountryService {
 
     public List<Country> getTopCountries(int limit) {
         return countryRepository.getTopCountries(limit);
+    }
+
+    public List<CountryPopulation> getCountryPopulationReport() {
+        return countryRepository.getCountryPopulationReport();
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.junaid.database.DatabaseConnection;
 import com.junaid.model.Country;
+import com.junaid.model.CountryPopulation;
 
 public class CountryRepository {
 
@@ -185,5 +186,50 @@ public class CountryRepository {
         }
 
         return countries;
+    }
+
+    public List<CountryPopulation> getCountryPopulationReport() {
+
+        List<CountryPopulation> report = new ArrayList<>();
+
+        String sql = """
+                SELECT
+                    co.Name,
+                    co.Population,
+                    COALESCE(SUM(ci.Population), 0) AS CityPopulation,
+                    (co.Population - COALESCE(SUM(ci.Population), 0)) AS RuralPopulation
+                FROM country co
+                LEFT JOIN city ci
+                    ON co.Code = ci.CountryCode
+                GROUP BY
+                    co.Code,
+                    co.Name,
+                    co.Population
+                ORDER BY
+                    co.Population DESC;
+                """;
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+
+                CountryPopulation countryPopulation = new CountryPopulation(
+                        resultSet.getString("Name"),
+                        resultSet.getLong("Population"),
+                        resultSet.getLong("CityPopulation"),
+                        resultSet.getLong("RuralPopulation"));
+
+                report.add(countryPopulation);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving country population report.");
+            e.printStackTrace();
+        }
+
+        return report;
     }
 }
