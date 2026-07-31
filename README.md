@@ -12,6 +12,8 @@ This project was developed as part of the Software Engineering Methods module us
 
 The table below provides evidence for each implemented requirement.
 
+all the images attached in the repo at specified path
+
 | ID  | Requirement                                                                 |  Met   | Screenshot                                     |
 | --- | --------------------------------------------------------------------------- | :----: | ---------------------------------------------- |
 | 1   | All the countries in the world organised by largest population to smallest  | ✅ Yes | `docs/screenshots/01-all-countries.png`        |
@@ -114,7 +116,7 @@ Tables:
 ## Build
 
 ```bash
-mvn clean package
+docker build -t world-report .
 ```
 
 ---
@@ -122,7 +124,7 @@ mvn clean package
 ## Run
 
 ```bash
-java -jar target/world-report-1.0-SNAPSHOT.jar
+docker run -it world-report
 ```
 
 ---
