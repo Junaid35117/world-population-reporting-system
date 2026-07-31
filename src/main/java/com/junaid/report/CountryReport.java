@@ -113,4 +113,70 @@ public class CountryReport {
         System.out.println(
                 "==============================================================================================================");
     }
+
+    public long getWorldPopulation() {
+        List<CountryPopulation> countries = countryService.getCountryPopulationReport();
+
+        long worldPopulation = 0;
+
+        for (CountryPopulation country : countries) {
+            worldPopulation += country.getTotalPopulation();
+        }
+
+        return worldPopulation;
+    }
+
+    public void displayWorldPopulation() {
+        long worldPopulation = getWorldPopulation();
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        System.out.println();
+        System.out.println("World Population: " + formatter.format(worldPopulation));
+    }
+
+    public void displayContinentPopulation(String continent) {
+        long continentPopulation = countryService.getContinentPopulation(continent);
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        System.out.println();
+        System.out.println("Population of " + continent + ": " + formatter.format(continentPopulation));
+    }
+
+    public void displayRegionPopulation(String region) {
+        long regionPopulation = countryService.getRegionPopulation(region);
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        System.out.println();
+        System.out.println("Population of " + region + ": " + formatter.format(regionPopulation));
+    }
+
+    public void displayCountryPopulation(String country) {
+        long countryPopulation = countryService.getCountryPopulation(country);
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        System.out.println();
+        System.out.println("Population of " + country + ": " + formatter.format(countryPopulation));
+    }
+
+    public void displayDistrictPopulation(String district) {
+        long districtPopulation = countryService.getDistrictPopulation(district);
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        System.out.println();
+        System.out.println("Population of " + district + ": " + formatter.format(districtPopulation));
+    }
+
+    public void displayCityPopulation(String city) {
+        long cityPopulation = countryService.getCityPopulation(city);
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        System.out.println();
+        System.out.println("Population of " + city + ": " + formatter.format(cityPopulation));
+    }
 }

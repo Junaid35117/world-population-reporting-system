@@ -232,4 +232,151 @@ public class CountryRepository {
 
         return report;
     }
+
+    public long getWorldPopulation() {
+        long worldPopulation = 0;
+
+        String sql = "SELECT SUM(Population) AS WorldPopulation FROM country";
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            if (resultSet.next()) {
+                worldPopulation = resultSet.getLong("WorldPopulation");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving world population.");
+            e.printStackTrace();
+        }
+
+        return worldPopulation;
+    }
+
+    public long getContinentPopulation(String continent) {
+        long continentPopulation = 0;
+
+        String sql = "SELECT SUM(Population) AS ContinentPopulation FROM country WHERE Continent = ?";
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, continent);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    continentPopulation = resultSet.getLong("ContinentPopulation");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving population for continent: " + continent);
+            e.printStackTrace();
+        }
+
+        return continentPopulation;
+    }
+
+    public long getRegionPopulation(String region) {
+        long regionPopulation = 0;
+
+        String sql = "SELECT SUM(Population) AS RegionPopulation FROM country WHERE Region = ?";
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, region);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    regionPopulation = resultSet.getLong("RegionPopulation");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving population for region: " + region);
+            e.printStackTrace();
+        }
+
+        return regionPopulation;
+    }
+
+    public long getCountryPopulation(String country) {
+        long countryPopulation = 0;
+
+        String sql = "SELECT Population FROM country WHERE Name = ?";
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, country);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    countryPopulation = resultSet.getLong("Population");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving population for country: " + country);
+            e.printStackTrace();
+        }
+
+        return countryPopulation;
+    }
+
+    public long getDistrictPopulation(String district) {
+        long districtPopulation = 0;
+
+        String sql = "SELECT SUM(Population) AS DistrictPopulation FROM city WHERE District = ?";
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, district);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    districtPopulation = resultSet.getLong("DistrictPopulation");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving population for district: " + district);
+            e.printStackTrace();
+        }
+
+        return districtPopulation;
+    }
+
+    public long getCityPopulation(String city) {
+        long cityPopulation = 0;
+
+        String sql = "SELECT Population FROM city WHERE Name = ?";
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, city);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    cityPopulation = resultSet.getLong("Population");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving population for city: " + city);
+            e.printStackTrace();
+        }
+
+        return cityPopulation;
+    }
 }
