@@ -7,16 +7,18 @@ public class Country {
     private String continent;
     private String region;
     private int population;
+    private String capital;
 
     public Country() {
     }
 
-    public Country(String code, String name, String continent, String region, int population) {
+    public Country(String code, String name, String continent, String region, int population, String capital) {
         this.code = code;
         this.name = name;
         this.continent = continent;
         this.region = region;
         this.population = population;
+        this.capital = capital;
     }
 
     public String getCode() {
@@ -59,6 +61,14 @@ public class Country {
         this.population = population;
     }
 
+    public String getCapital() {
+        return capital;
+    }
+
+    public void setCapital(String capital) {
+        this.capital = capital;
+    }
+
     @Override
     public String toString() {
         return "Country{" +
@@ -67,6 +77,7 @@ public class Country {
                 ", continent='" + continent + '\'' +
                 ", region='" + region + '\'' +
                 ", population=" + population +
+                ", capital='" + capital + '\'' +
                 '}';
     }
 }

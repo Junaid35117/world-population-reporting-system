@@ -92,7 +92,7 @@ public class Application {
 
                 case 10:
 
-                    countryReport.displayCountryPopulationReport();
+                    countryReport.displayWorldPopulation();
 
                     break;
                 case 11:

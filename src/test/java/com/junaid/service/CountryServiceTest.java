@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.junaid.model.Country;
+import com.junaid.model.PopulationReport;
 
 class CountryServiceTest {
 
@@ -56,9 +57,12 @@ class CountryServiceTest {
     @Test
     void shouldReturnWorldPopulation() {
 
-        long population = countryService.getWorldPopulation();
+        PopulationReport report = countryService.getWorldPopulationReport();
 
-        assertTrue(population > 0);
+        assertNotNull(report);
+        assertTrue(report.getTotalPopulation() > 0);
+        assertTrue(report.getCityPopulation() >= 0);
+        assertTrue(report.getRuralPopulation() >= 0);
     }
 
 }

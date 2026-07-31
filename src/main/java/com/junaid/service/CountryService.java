@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.junaid.model.Country;
 import com.junaid.model.CountryPopulation;
+import com.junaid.model.PopulationReport;
 import com.junaid.repository.CountryRepository;
 
 public class CountryService {
@@ -34,27 +35,27 @@ public class CountryService {
         return countryRepository.getCountryPopulationReport();
     }
 
-    public long getWorldPopulation() {
-        return countryRepository.getWorldPopulation();
+    public PopulationReport getWorldPopulationReport() {
+        return countryRepository.getWorldPopulationReport();
     }
 
-    public long getContinentPopulation(String continent) {
-        return countryRepository.getContinentPopulation(continent);
+    public PopulationReport getContinentPopulationReport(String continent) {
+        return countryRepository.getContinentPopulationReport(continent);
     }
 
-    public long getRegionPopulation(String region) {
-        return countryRepository.getRegionPopulation(region);
+    public PopulationReport getRegionPopulationReport(String region) {
+        return countryRepository.getRegionPopulationReport(region);
     }
 
-    public long getCountryPopulation(String country) {
-        return countryRepository.getCountryPopulation(country);
+    public PopulationReport getCountryPopulationReport(String country) {
+        return countryRepository.getCountryPopulationReport(country);
     }
 
-    public long getDistrictPopulation(String district) {
-        return countryRepository.getDistrictPopulation(district);
+    public PopulationReport getDistrictPopulationReport(String district) {
+        return countryRepository.getDistrictPopulationReport(district);
     }
 
-    public long getCityPopulation(String city) {
-        return countryRepository.getCityPopulation(city);
+    public PopulationReport getCityPopulationReport(String city) {
+        return countryRepository.getCityPopulationReport(city);
     }
 }

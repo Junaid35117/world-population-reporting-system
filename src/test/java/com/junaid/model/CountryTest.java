@@ -14,12 +14,14 @@ class CountryTest {
                 "Pakistan",
                 "Asia",
                 "Southern Asia",
-                240485658);
+                240485658,
+                "Islamabad");
 
         assertEquals("PAK", country.getCode());
         assertEquals("Pakistan", country.getName());
         assertEquals("Asia", country.getContinent());
         assertEquals("Southern Asia", country.getRegion());
         assertEquals(240485658, country.getPopulation());
+        assertEquals("Islamabad", country.getCapital());
     }
 }

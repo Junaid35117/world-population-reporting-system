@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.junaid.model.Country;
 import com.junaid.model.CountryPopulation;
+import com.junaid.model.PopulationReport;
 import com.junaid.service.CountryService;
 
 public class CountryReport {
@@ -79,11 +80,9 @@ public class CountryReport {
         printCountries(countries);
     }
 
-    public void displayCountryPopulationReport() {
+    private void displayPopulationReport(PopulationReport report) {
 
-        List<CountryPopulation> countries = countryService.getCountryPopulationReport();
-
-        if (countries == null || countries.isEmpty()) {
+        if (report == null) {
             System.out.println("No data found.");
             return;
         }
@@ -91,92 +90,57 @@ public class CountryReport {
         NumberFormat formatter = NumberFormat.getInstance();
 
         System.out.println();
-        System.out.println(
-                "==============================================================================================================");
-        System.out.printf("%-30s %18s %20s %22s%n",
-                "Country",
-                "Total Population",
-                "City Population",
-                "Non-City Population");
-        System.out.println(
-                "==============================================================================================================");
-
-        for (CountryPopulation country : countries) {
-
-            System.out.printf("%-30s %18s %20s %22s%n",
-                    country.getCountryName(),
-                    formatter.format(country.getTotalPopulation()),
-                    formatter.format(country.getCityPopulation()),
-                    formatter.format(country.getRuralPopulation()));
-        }
-
-        System.out.println(
-                "==============================================================================================================");
+        System.out.println("=========================================");
+        System.out.println("Population Report");
+        System.out.println("=========================================");
+        System.out.println("Name               : " + report.getName());
+        System.out.println("Total Population   : " + formatter.format(report.getTotalPopulation()));
+        System.out.println("City Population    : " + formatter.format(report.getCityPopulation())
+                + String.format(" (%.2f%%)", report.getCityPercentage()));
+        System.out.println("Rural Population   : " + formatter.format(report.getRuralPopulation())
+                + String.format(" (%.2f%%)", report.getRuralPercentage()));
+        System.out.println("=========================================");
     }
 
-    public long getWorldPopulation() {
-        List<CountryPopulation> countries = countryService.getCountryPopulationReport();
-
-        long worldPopulation = 0;
-
-        for (CountryPopulation country : countries) {
-            worldPopulation += country.getTotalPopulation();
-        }
-
-        return worldPopulation;
+    public PopulationReport getWorldPopulation() {
+        return countryService.getWorldPopulationReport();
     }
 
     public void displayWorldPopulation() {
-        long worldPopulation = getWorldPopulation();
 
-        NumberFormat formatter = NumberFormat.getInstance();
+        PopulationReport report = countryService.getWorldPopulationReport();
 
-        System.out.println();
-        System.out.println("World Population: " + formatter.format(worldPopulation));
+        displayPopulationReport(report);
     }
 
     public void displayContinentPopulation(String continent) {
-        long continentPopulation = countryService.getContinentPopulation(continent);
 
-        NumberFormat formatter = NumberFormat.getInstance();
+        PopulationReport report = countryService.getContinentPopulationReport(continent);
 
-        System.out.println();
-        System.out.println("Population of " + continent + ": " + formatter.format(continentPopulation));
+        displayPopulationReport(report);
     }
 
     public void displayRegionPopulation(String region) {
-        long regionPopulation = countryService.getRegionPopulation(region);
+        PopulationReport report = countryService.getRegionPopulationReport(region);
 
-        NumberFormat formatter = NumberFormat.getInstance();
-
-        System.out.println();
-        System.out.println("Population of " + region + ": " + formatter.format(regionPopulation));
+        displayPopulationReport(report);
     }
 
     public void displayCountryPopulation(String country) {
-        long countryPopulation = countryService.getCountryPopulation(country);
+        PopulationReport report = countryService.getCountryPopulationReport(country);
 
-        NumberFormat formatter = NumberFormat.getInstance();
-
-        System.out.println();
-        System.out.println("Population of " + country + ": " + formatter.format(countryPopulation));
+        displayPopulationReport(report);
     }
 
     public void displayDistrictPopulation(String district) {
-        long districtPopulation = countryService.getDistrictPopulation(district);
+        PopulationReport report = countryService.getDistrictPopulationReport(district);
 
-        NumberFormat formatter = NumberFormat.getInstance();
-
-        System.out.println();
-        System.out.println("Population of " + district + ": " + formatter.format(districtPopulation));
+        displayPopulationReport(report);
     }
 
     public void displayCityPopulation(String city) {
-        long cityPopulation = countryService.getCityPopulation(city);
+        PopulationReport report = countryService.getCityPopulationReport(city);
 
-        NumberFormat formatter = NumberFormat.getInstance();
-
-        System.out.println();
-        System.out.println("Population of " + city + ": " + formatter.format(cityPopulation));
+        displayPopulationReport(report);
     }
 }

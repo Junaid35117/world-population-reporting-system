@@ -6,6 +6,23 @@ This project was developed as part of the Software Engineering Methods module us
 
 ---
 
+## Requirements Met
+
+**8 requirements out of 8 have been implemented (100%).**
+
+The table below provides evidence for each implemented requirement.
+
+| ID  | Requirement                                                                 |  Met   | Screenshot                                     |
+| --- | --------------------------------------------------------------------------- | :----: | ---------------------------------------------- |
+| 1   | All the countries in the world organised by largest population to smallest  | ✅ Yes | `docs/screenshots/01-all-countries.png`        |
+| 2   | All cities in the world organised by largest population to smallest         | ✅ Yes | `docs/screenshots/02-all-cities.png`           |
+| 3   | All capital cities in the world organised by largest population to smallest | ✅ Yes | `docs/screenshots/03-capital-cities.png`       |
+| 4   | Population report for the world                                             | ✅ Yes | `docs/screenshots/04-world-population.png`     |
+| 5   | Population report for a continent                                           | ✅ Yes | `docs/screenshots/05-continent-population.png` |
+| 6   | Population report for a region                                              | ✅ Yes | `docs/screenshots/06-region-population.png`    |
+| 7   | Population report for a country                                             | ✅ Yes | `docs/screenshots/07-country-population.png`   |
+| 8   | Language report                                                             | ✅ Yes | `docs/screenshots/08-language-report.png`      |
+
 ## Features
 
 ### Country Reports

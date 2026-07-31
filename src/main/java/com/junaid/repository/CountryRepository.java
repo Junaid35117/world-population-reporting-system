@@ -10,6 +10,7 @@ import java.util.List;
 import com.junaid.database.DatabaseConnection;
 import com.junaid.model.Country;
 import com.junaid.model.CountryPopulation;
+import com.junaid.model.PopulationReport;
 
 public class CountryRepository {
 
@@ -28,7 +29,8 @@ public class CountryRepository {
                        Name,
                        Continent,
                        Region,
-                       Population
+                       Population,
+                       Capital
                 FROM country
                 ORDER BY Population DESC
                 """;
@@ -45,7 +47,8 @@ public class CountryRepository {
                         resultSet.getString("Name"),
                         resultSet.getString("Continent"),
                         resultSet.getString("Region"),
-                        resultSet.getInt("Population"));
+                        resultSet.getInt("Population"),
+                        resultSet.getString("Capital"));
 
                 countries.add(country);
             }
@@ -66,7 +69,8 @@ public class CountryRepository {
                        Name,
                        Continent,
                        Region,
-                       Population
+                       Population,
+                       Capital
                 FROM country
                 WHERE Continent = ?
                 ORDER BY Population DESC
@@ -87,7 +91,8 @@ public class CountryRepository {
                             resultSet.getString("Name"),
                             resultSet.getString("Continent"),
                             resultSet.getString("Region"),
-                            resultSet.getInt("Population"));
+                            resultSet.getInt("Population"),
+                            resultSet.getString("Capital"));
 
                     countries.add(country);
                 }
@@ -109,7 +114,8 @@ public class CountryRepository {
                        Name,
                        Continent,
                        Region,
-                       Population
+                       Population,
+                       Capital
                 FROM country
                 WHERE Region = ?
                 ORDER BY Population DESC
@@ -130,7 +136,8 @@ public class CountryRepository {
                             resultSet.getString("Name"),
                             resultSet.getString("Continent"),
                             resultSet.getString("Region"),
-                            resultSet.getInt("Population"));
+                            resultSet.getInt("Population"),
+                            resultSet.getString("Capital"));
 
                     countries.add(country);
                 }
@@ -153,7 +160,8 @@ public class CountryRepository {
                        Name,
                        Continent,
                        Region,
-                       Population
+                       Population,
+                       Capital
                 FROM country
                 ORDER BY Population DESC
                 LIMIT ?
@@ -174,7 +182,8 @@ public class CountryRepository {
                             resultSet.getString("Name"),
                             resultSet.getString("Continent"),
                             resultSet.getString("Region"),
-                            resultSet.getInt("Population"));
+                            resultSet.getInt("Population"),
+                            resultSet.getString("Capital"));
 
                     countries.add(country);
                 }
@@ -233,32 +242,61 @@ public class CountryRepository {
         return report;
     }
 
-    public long getWorldPopulation() {
-        long worldPopulation = 0;
+    public PopulationReport getWorldPopulationReport() {
 
-        String sql = "SELECT SUM(Population) AS WorldPopulation FROM country";
+        String sql = """
+                SELECT
+                    'World' AS Name,
+                    SUM(c.Population) AS TotalPopulation,
+                    IFNULL(SUM(ci.Population),0) AS CityPopulation
+                FROM country c
+                LEFT JOIN city ci
+                ON c.Code = ci.CountryCode
+                """;
 
         try (
                 Connection connection = databaseConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
-                ResultSet resultSet = statement.executeQuery()) {
+                ResultSet rs = statement.executeQuery()) {
 
-            if (resultSet.next()) {
-                worldPopulation = resultSet.getLong("WorldPopulation");
+            if (rs.next()) {
+
+                long total = rs.getLong("TotalPopulation");
+                long city = rs.getLong("CityPopulation");
+                long rural = total - city;
+
+                double cityPercent = (city * 100.0) / total;
+                double ruralPercent = (rural * 100.0) / total;
+
+                return new PopulationReport(
+                        rs.getString("Name"),
+                        total,
+                        city,
+                        rural,
+                        cityPercent,
+                        ruralPercent);
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving world population.");
             e.printStackTrace();
         }
 
-        return worldPopulation;
+        return null;
     }
 
-    public long getContinentPopulation(String continent) {
-        long continentPopulation = 0;
+    public PopulationReport getContinentPopulationReport(String continent) {
 
-        String sql = "SELECT SUM(Population) AS ContinentPopulation FROM country WHERE Continent = ?";
+        String sql = """
+                SELECT
+                    c.Continent,
+                    SUM(c.Population) AS TotalPopulation,
+                    IFNULL(SUM(ci.Population),0) AS CityPopulation
+                FROM country c
+                LEFT JOIN city ci
+                ON c.Code = ci.CountryCode
+                WHERE c.Continent = ?
+                GROUP BY c.Continent
+                """;
 
         try (
                 Connection connection = databaseConnection.getConnection();
@@ -266,24 +304,43 @@ public class CountryRepository {
 
             statement.setString(1, continent);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    continentPopulation = resultSet.getLong("ContinentPopulation");
-                }
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+
+                long total = rs.getLong("TotalPopulation");
+                long city = rs.getLong("CityPopulation");
+                long rural = total - city;
+
+                return new PopulationReport(
+                        continent,
+                        total,
+                        city,
+                        rural,
+                        city * 100.0 / total,
+                        rural * 100.0 / total);
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving population for continent: " + continent);
             e.printStackTrace();
         }
 
-        return continentPopulation;
+        return null;
     }
 
-    public long getRegionPopulation(String region) {
-        long regionPopulation = 0;
+    public PopulationReport getRegionPopulationReport(String region) {
 
-        String sql = "SELECT SUM(Population) AS RegionPopulation FROM country WHERE Region = ?";
+        String sql = """
+                SELECT
+                    c.Region AS Name,
+                    SUM(c.Population) AS TotalPopulation,
+                    IFNULL(SUM(ci.Population), 0) AS CityPopulation
+                FROM country c
+                LEFT JOIN city ci
+                    ON c.Code = ci.CountryCode
+                WHERE c.Region = ?
+                GROUP BY c.Region
+                """;
 
         try (
                 Connection connection = databaseConnection.getConnection();
@@ -291,9 +348,21 @@ public class CountryRepository {
 
             statement.setString(1, region);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    regionPopulation = resultSet.getLong("RegionPopulation");
+            try (ResultSet rs = statement.executeQuery()) {
+
+                if (rs.next()) {
+
+                    long total = rs.getLong("TotalPopulation");
+                    long city = rs.getLong("CityPopulation");
+                    long rural = total - city;
+
+                    return new PopulationReport(
+                            rs.getString("Name"),
+                            total,
+                            city,
+                            rural,
+                            (city * 100.0) / total,
+                            (rural * 100.0) / total);
                 }
             }
 
@@ -302,13 +371,22 @@ public class CountryRepository {
             e.printStackTrace();
         }
 
-        return regionPopulation;
+        return null;
     }
 
-    public long getCountryPopulation(String country) {
-        long countryPopulation = 0;
+    public PopulationReport getCountryPopulationReport(String country) {
 
-        String sql = "SELECT Population FROM country WHERE Name = ?";
+        String sql = """
+                SELECT
+                    c.Name,
+                    c.Population AS TotalPopulation,
+                    IFNULL(SUM(ci.Population),0) AS CityPopulation
+                FROM country c
+                LEFT JOIN city ci
+                    ON c.Code = ci.CountryCode
+                WHERE c.Name = ?
+                GROUP BY c.Code
+                """;
 
         try (
                 Connection connection = databaseConnection.getConnection();
@@ -316,9 +394,21 @@ public class CountryRepository {
 
             statement.setString(1, country);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    countryPopulation = resultSet.getLong("Population");
+            try (ResultSet rs = statement.executeQuery()) {
+
+                if (rs.next()) {
+
+                    long total = rs.getLong("TotalPopulation");
+                    long city = rs.getLong("CityPopulation");
+                    long rural = total - city;
+
+                    return new PopulationReport(
+                            rs.getString("Name"),
+                            total,
+                            city,
+                            rural,
+                            (city * 100.0) / total,
+                            (rural * 100.0) / total);
                 }
             }
 
@@ -327,13 +417,19 @@ public class CountryRepository {
             e.printStackTrace();
         }
 
-        return countryPopulation;
+        return null;
     }
 
-    public long getDistrictPopulation(String district) {
-        long districtPopulation = 0;
+    public PopulationReport getDistrictPopulationReport(String district) {
 
-        String sql = "SELECT SUM(Population) AS DistrictPopulation FROM city WHERE District = ?";
+        String sql = """
+                SELECT
+                    District AS Name,
+                    SUM(Population) AS TotalPopulation
+                FROM city
+                WHERE District = ?
+                GROUP BY District
+                """;
 
         try (
                 Connection connection = databaseConnection.getConnection();
@@ -341,9 +437,19 @@ public class CountryRepository {
 
             statement.setString(1, district);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    districtPopulation = resultSet.getLong("DistrictPopulation");
+            try (ResultSet rs = statement.executeQuery()) {
+
+                if (rs.next()) {
+
+                    long total = rs.getLong("TotalPopulation");
+
+                    return new PopulationReport(
+                            rs.getString("Name"),
+                            total,
+                            total,
+                            0,
+                            100.0,
+                            0.0);
                 }
             }
 
@@ -352,13 +458,18 @@ public class CountryRepository {
             e.printStackTrace();
         }
 
-        return districtPopulation;
+        return null;
     }
 
-    public long getCityPopulation(String city) {
-        long cityPopulation = 0;
+    public PopulationReport getCityPopulationReport(String city) {
 
-        String sql = "SELECT Population FROM city WHERE Name = ?";
+        String sql = """
+                SELECT
+                    Name,
+                    Population
+                FROM city
+                WHERE Name = ?
+                """;
 
         try (
                 Connection connection = databaseConnection.getConnection();
@@ -366,9 +477,19 @@ public class CountryRepository {
 
             statement.setString(1, city);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    cityPopulation = resultSet.getLong("Population");
+            try (ResultSet rs = statement.executeQuery()) {
+
+                if (rs.next()) {
+
+                    long total = rs.getLong("Population");
+
+                    return new PopulationReport(
+                            rs.getString("Name"),
+                            total,
+                            total,
+                            0,
+                            100.0,
+                            0.0);
                 }
             }
 
@@ -377,6 +498,6 @@ public class CountryRepository {
             e.printStackTrace();
         }
 
-        return cityPopulation;
+        return null;
     }
 }
