@@ -68,4 +68,18 @@ public class CityReport {
 
         printCities(cities);
     }
+
+    public void displayAllCapitalCities() {
+
+        List<City> cities = cityService.getAllCapitalCities();
+
+        printCities(cities);
+    }
+
+    public void displayTopCities(int limit) {
+
+        List<City> cities = cityService.getTopCities(limit);
+
+        printCities(cities);
+    }
 }

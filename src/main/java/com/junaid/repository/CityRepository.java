@@ -155,4 +155,96 @@ public class CityRepository {
 
         return cities;
     }
+
+    public List<City> getAllCapitalCities() {
+
+        List<City> cities = new ArrayList<>();
+
+        String sql = """
+                SELECT
+                    c.ID,
+                    c.Name,
+                    c.CountryCode,
+                    co.Name AS CountryName,
+                    c.District,
+                    c.Population
+                FROM city c
+                INNER JOIN country co
+                    ON c.ID = co.Capital
+                ORDER BY c.Population DESC
+                """;
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+
+                City city = new City(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("Name"),
+                        resultSet.getString("CountryCode"),
+                        resultSet.getString("CountryName"),
+                        resultSet.getString("District"),
+                        resultSet.getInt("Population"));
+
+                cities.add(city);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cities;
+    }
+
+    public List<City> getTopCities(int limit) {
+
+        List<City> cities = new ArrayList<>();
+
+        String sql = """
+                SELECT
+                    c.ID,
+                    c.Name,
+                    c.CountryCode,
+                    co.Name AS CountryName,
+                    c.District,
+                    c.Population
+                FROM city c
+                JOIN country co
+                    ON c.CountryCode = co.Code
+                ORDER BY c.Population DESC
+                LIMIT ?
+                """;
+
+        try (
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, limit);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+
+                    City city = new City(
+                            resultSet.getInt("ID"),
+                            resultSet.getString("Name"),
+                            resultSet.getString("CountryCode"),
+                            resultSet.getString("CountryName"),
+                            resultSet.getString("District"),
+                            resultSet.getInt("Population"));
+
+                    cities.add(city);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cities;
+    }
 }

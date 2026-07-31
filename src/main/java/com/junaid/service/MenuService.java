@@ -28,11 +28,12 @@ public class MenuService {
             System.out.println("5. All Cities by Population");
             System.out.println("6. Cities in a Country");
             System.out.println("7. Cities in a District");
+            System.out.println("8. All Capital Cities");
             System.out.println();
             System.out.println("POPULATION REPORTS");
-            System.out.println("8. World Population");
-            System.out.println("9. Continent Population");
-            System.out.println("10. Region Population");
+            System.out.println("9. World Population");
+            System.out.println("10. Continent Population");
+            System.out.println("11. Region Population");
             System.out.println();
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
@@ -84,11 +85,11 @@ public class MenuService {
         }
     }
 
-    public int getCountryLimit() {
+    public int getLimit() {
 
         while (true) {
 
-            System.out.print("Enter number of countries: ");
+            System.out.print("Enter Number: ");
 
             if (scanner.hasNextInt()) {
 
