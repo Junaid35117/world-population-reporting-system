@@ -39,6 +39,7 @@ public class MenuService {
             System.out.println("14. Country Population");
             System.out.println("15. District Population");
             System.out.println("16. City Population");
+            System.out.println("17. Language Report");
             System.out.println();
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
@@ -146,6 +147,24 @@ public class MenuService {
             }
 
             System.out.println("District name cannot be empty.");
+        }
+    }
+
+    public String getCityName() {
+
+        scanner.nextLine();
+
+        while (true) {
+
+            System.out.print("Enter City Name: ");
+
+            String city = scanner.nextLine().trim();
+
+            if (!city.isEmpty()) {
+                return city;
+            }
+
+            System.out.println("City name cannot be empty.");
         }
     }
 }
