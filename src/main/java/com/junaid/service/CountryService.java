@@ -33,4 +33,28 @@ public class CountryService {
     public List<CountryPopulation> getCountryPopulationReport() {
         return countryRepository.getCountryPopulationReport();
     }
+
+    public long getWorldPopulation() {
+        return countryRepository.getWorldPopulation();
+    }
+
+    public long getContinentPopulation(String continent) {
+        return countryRepository.getContinentPopulation(continent);
+    }
+
+    public long getRegionPopulation(String region) {
+        return countryRepository.getRegionPopulation(region);
+    }
+
+    public long getCountryPopulation(String country) {
+        return countryRepository.getCountryPopulation(country);
+    }
+
+    public long getDistrictPopulation(String district) {
+        return countryRepository.getDistrictPopulation(district);
+    }
+
+    public long getCityPopulation(String city) {
+        return countryRepository.getCityPopulation(city);
+    }
 }

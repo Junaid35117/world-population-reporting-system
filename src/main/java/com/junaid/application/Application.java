@@ -92,7 +92,25 @@ public class Application {
                     countryReport.displayCountryPopulationReport();
 
                     break;
-
+                case 11:
+                    countryReport.displayWorldPopulation();
+                    break;
+                case 12:
+                    String continentName = menuService.getContinentName();
+                    countryReport.displayContinentPopulation(continentName);
+                    break;
+                case 13:
+                    String regionName = menuService.getRegionName();
+                    countryReport.displayRegionPopulation(regionName);
+                    break;
+                case 14:
+                    String countryName = menuService.getCountryName();
+                    countryReport.displayCountryPopulation(countryName);
+                    break;
+                case 15:
+                    String districtName = menuService.getDistrictName();
+                    countryReport.displayDistrictPopulation(districtName);
+                    break;
                 case 0:
                     System.out.println();
                     System.out.println("=======================================");
