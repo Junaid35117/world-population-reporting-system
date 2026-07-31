@@ -3,17 +3,20 @@ package com.junaid.application;
 import com.junaid.report.CityReport;
 import com.junaid.report.CountryReport;
 import com.junaid.service.MenuService;
+import com.junaid.report.LanguageReportPrinter;
 
 public class Application {
 
     private final MenuService menuService;
     private final CountryReport countryReport;
     private final CityReport cityReport;
+    private final LanguageReportPrinter languageReportPrinter;
 
     public Application() {
         this.menuService = new MenuService();
         this.countryReport = new CountryReport();
         this.cityReport = new CityReport();
+        this.languageReportPrinter = new LanguageReportPrinter();
     }
 
     public void start() {
@@ -110,6 +113,14 @@ public class Application {
                 case 15:
                     String districtName = menuService.getDistrictName();
                     countryReport.displayDistrictPopulation(districtName);
+                    break;
+                case 16:
+                    String cityName = menuService.getCityName();
+                    countryReport.displayCityPopulation(cityName);
+                    break;
+
+                case 17:
+                    languageReportPrinter.displayLanguageReport();
                     break;
                 case 0:
                     System.out.println();
