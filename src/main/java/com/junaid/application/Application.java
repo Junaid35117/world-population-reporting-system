@@ -1,0 +1,140 @@
+package com.junaid.application;
+
+import com.junaid.report.CityReport;
+import com.junaid.report.CountryReport;
+import com.junaid.service.MenuService;
+import com.junaid.report.LanguageReportPrinter;
+
+public class Application {
+
+    private final MenuService menuService;
+    private final CountryReport countryReport;
+    private final CityReport cityReport;
+    private final LanguageReportPrinter languageReportPrinter;
+
+    public Application() {
+        this.menuService = new MenuService();
+        this.countryReport = new CountryReport();
+        this.cityReport = new CityReport();
+        this.languageReportPrinter = new LanguageReportPrinter();
+    }
+
+    public void start() {
+
+        boolean running = true;
+        int limit;
+
+        while (running) {
+
+            int choice = menuService.getUserChoice();
+
+            switch (choice) {
+
+                case 1:
+                    countryReport.displayAllCountriesByPopulation();
+                    break;
+
+                case 2:
+                    String continent = menuService.getContinentName();
+                    countryReport.displayCountriesByContinent(continent);
+                    break;
+
+                case 3:
+
+                    String region = menuService.getRegionName();
+
+                    countryReport.displayCountriesByRegion(region);
+
+                    break;
+
+                case 4:
+
+                    limit = menuService.getLimit();
+
+                    countryReport.displayTopCountries(limit);
+
+                    break;
+                case 5:
+
+                    cityReport.displayAllCitiesByPopulation();
+
+                    break;
+
+                case 6:
+
+                    String country = menuService.getCountryName();
+
+                    cityReport.displayCitiesByCountry(country);
+
+                    break;
+
+                case 7:
+
+                    String district = menuService.getDistrictName();
+
+                    cityReport.displayCitiesByDistrict(district);
+
+                    break;
+
+                case 8:
+
+                    cityReport.displayAllCapitalCities();
+
+                    break;
+
+                case 9:
+
+                    limit = menuService.getLimit();
+
+                    cityReport.displayTopCities(limit);
+
+                    break;
+
+                case 10:
+
+                    countryReport.displayCountryPopulationReport();
+
+                    break;
+                case 11:
+                    countryReport.displayWorldPopulation();
+                    break;
+                case 12:
+                    String continentName = menuService.getContinentName();
+                    countryReport.displayContinentPopulation(continentName);
+                    break;
+                case 13:
+                    String regionName = menuService.getRegionName();
+                    countryReport.displayRegionPopulation(regionName);
+                    break;
+                case 14:
+                    String countryName = menuService.getCountryName();
+                    countryReport.displayCountryPopulation(countryName);
+                    break;
+                case 15:
+                    String districtName = menuService.getDistrictName();
+                    countryReport.displayDistrictPopulation(districtName);
+                    break;
+                case 16:
+                    String cityName = menuService.getCityName();
+                    countryReport.displayCityPopulation(cityName);
+                    break;
+
+                case 17:
+                    languageReportPrinter.displayLanguageReport();
+                    break;
+                case 0:
+                    System.out.println();
+                    System.out.println("=======================================");
+                    System.out.println("Thank you for using World Report System");
+                    System.out.println("=======================================");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Feature coming soon...");
+            }
+
+            System.out.println();
+        }
+    }
+}
