@@ -85,11 +85,11 @@ public class MenuService {
         }
     }
 
-    public int getCountryLimit() {
+    public int getLimit() {
 
         while (true) {
 
-            System.out.print("Enter number of countries: ");
+            System.out.print("Enter Number: ");
 
             if (scanner.hasNextInt()) {
 

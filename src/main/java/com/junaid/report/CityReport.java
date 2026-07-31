@@ -75,4 +75,11 @@ public class CityReport {
 
         printCities(cities);
     }
+
+    public void displayTopCities(int limit) {
+
+        List<City> cities = cityService.getTopCities(limit);
+
+        printCities(cities);
+    }
 }

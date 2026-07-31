@@ -19,6 +19,7 @@ public class Application {
     public void start() {
 
         boolean running = true;
+        int limit;
 
         while (running) {
 
@@ -45,7 +46,7 @@ public class Application {
 
                 case 4:
 
-                    int limit = menuService.getCountryLimit();
+                    limit = menuService.getLimit();
 
                     countryReport.displayTopCountries(limit);
 
@@ -75,6 +76,14 @@ public class Application {
                 case 8:
 
                     cityReport.displayAllCapitalCities();
+
+                    break;
+
+                case 9:
+
+                    limit = menuService.getLimit();
+
+                    cityReport.displayTopCities(limit);
 
                     break;
 

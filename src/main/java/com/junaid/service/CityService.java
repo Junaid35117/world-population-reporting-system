@@ -27,4 +27,8 @@ public class CityService {
     public List<City> getAllCapitalCities() {
         return cityRepository.getAllCapitalCities();
     }
+
+    public List<City> getTopCities(int limit) {
+        return cityRepository.getTopCities(limit);
+    }
 }
