@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.List;
 
 import com.junaid.model.Country;
+import com.junaid.model.CountryPopulation;
 import com.junaid.service.CountryService;
 
 public class CountryReport {
@@ -76,5 +77,40 @@ public class CountryReport {
         List<Country> countries = countryService.getTopCountries(limit);
 
         printCountries(countries);
+    }
+
+    public void displayCountryPopulationReport() {
+
+        List<CountryPopulation> countries = countryService.getCountryPopulationReport();
+
+        if (countries == null || countries.isEmpty()) {
+            System.out.println("No data found.");
+            return;
+        }
+
+        NumberFormat formatter = NumberFormat.getInstance();
+
+        System.out.println();
+        System.out.println(
+                "==============================================================================================================");
+        System.out.printf("%-30s %18s %20s %22s%n",
+                "Country",
+                "Total Population",
+                "City Population",
+                "Non-City Population");
+        System.out.println(
+                "==============================================================================================================");
+
+        for (CountryPopulation country : countries) {
+
+            System.out.printf("%-30s %18s %20s %22s%n",
+                    country.getCountryName(),
+                    formatter.format(country.getTotalPopulation()),
+                    formatter.format(country.getCityPopulation()),
+                    formatter.format(country.getRuralPopulation()));
+        }
+
+        System.out.println(
+                "==============================================================================================================");
     }
 }

@@ -87,6 +87,12 @@ public class Application {
 
                     break;
 
+                case 10:
+
+                    countryReport.displayCountryPopulationReport();
+
+                    break;
+
                 case 0:
                     System.out.println();
                     System.out.println("=======================================");

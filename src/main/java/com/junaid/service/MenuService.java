@@ -32,8 +32,9 @@ public class MenuService {
             System.out.println();
             System.out.println("POPULATION REPORTS");
             System.out.println("9. World Population");
-            System.out.println("10. Continent Population");
-            System.out.println("11. Region Population");
+            System.out.println("10. Country Population Report");
+            System.out.println("11. Continent Population");
+            System.out.println("12. Region Population");
             System.out.println();
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
